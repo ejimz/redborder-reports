@@ -120,19 +120,19 @@ if !nodes.nil? and !nodes.empty?
   nodes.each do |name,node|
     next unless node[:redBorder][:is_manager]
     segment_list = []
+    type = "manager"
 
-  data["name"] = name
-  data["ip_address"] = node.ipaddress
-  data["version"] = node["redBorder"]["rpms"]["manager"]
-  data["chef_status"] = ((Time.now.to_i-node[:ohai_time].to_i>600)?("fail"):("ok"))
-  data["cpu_model"] = node["cpu"]["0"]["model_name"]
-  data["cpus"] = node.cpu.total.to_s
-  data["memory"] = node.memory.total
-  data["performance"] = {}
-  data["performance"] = performance_data
-
-
-Show_data.new(data, "managers")
+    data["name"] = name
+    data["ip_address"] = node.ipaddress
+    data["version"] = node["redBorder"]["rpms"]["manager"]
+    data["chef_status"] = ((Time.now.to_i-node[:ohai_time].to_i>600)?("fail"):("ok"))
+    data["cpu_model"] = node["cpu"]["0"]["model_name"]
+    data["cpus"] = node.cpu.total.to_s
+    data["memory"] = node.memory.total
+    data["performance"] = {}
+    data["performance"] = performance_data
+  
+    Show_data.new(data, "manager", time_arr)
 
     CSV.open(report_file, "a+") do |csv|
       csv << [name, node.ipaddress, node["redBorder"]["rpms"]["manager"], \

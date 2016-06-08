@@ -1,0 +1,38 @@
+{
+    "queryType" : "groupBy",
+    "dataSource": "rb_monitor",
+    "granularity": "all",
+    "dimensions": ["monitor","sensor_name"],
+    "aggregations":[
+         {"type":"longSum", "name":"events", "fieldName":"events"},
+         {"type":"longSum", "name":"value", "fieldName":"sum_value"},
+         {"type":"max", "name":"max", "fieldName":"max_value"},
+         {"type":"min", "name":"min", "fieldName":"min_value"}
+    ],
+    "filter": { "type" : "or", "fields": [
+       { "type": "selector", "dimension": "monitor", "value": "cpu" },
+       { "type": "selector", "dimension": "monitor", "value": "memory" },
+       { "type": "selector", "dimension": "monitor", "value": "disk_load" },
+       { "type": "selector", "dimension": "monitor", "value": "load_1" }
+    ]},
+    "postAggregations": [
+        {
+            "type": "arithmetic",
+            "name": "average",
+            "fn": "/",
+            "fields": [
+                {
+                    "type": "fieldAccess",
+                    "name": "value",
+                    "fieldName": "value"
+                },
+                {
+                    "type": "fieldAccess",
+                    "name": "events",
+                    "fieldName": "events"
+                }
+            ]
+        }
+    ],
+    "intervals":[]
+}

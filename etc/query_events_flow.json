@@ -1,0 +1,31 @@
+{
+    "queryType": "groupBy",
+    "dataSource": "rb_flow",
+    "granularity": "all",
+    "dimensions": ["sensor_name"],
+    "threshold": 1000,
+    "metric": "events",    
+    "aggregations":[
+         {"type":"longSum", "name":"events", "fieldName":"events"}
+    ],
+    "postAggregations": [ 
+        {
+            "type": "arithmetic",
+            "name": "eventsPerSec",
+            "fn": "/",
+            "fields": [
+                {
+                    "type": "fieldAccess",
+                    "name": "events",
+                    "fieldName": "events"
+                },
+                {
+                    "type": "constant",
+                    "name": "events",
+                    "value": 3600
+                }
+            ]
+        }
+    ],
+    "intervals":[]
+}

@@ -1,0 +1,31 @@
+{
+    "queryType": "groupBy",
+    "dataSource": "rb_flow",
+    "granularity": "all",
+    "dimensions": ["sensor_name"],
+    "threshold": 1000,
+    "metric": "sum_bytes",    
+    "aggregations":[
+         {"type":"longSum", "name":"sum_bytes", "fieldName":"sum_bytes"}
+    ],
+    "postAggregations": [ 
+        {
+            "type": "arithmetic",
+            "name": "avg_Mbps",
+            "fn": "/",
+            "fields": [
+                {
+                    "type": "fieldAccess",
+                    "name": "sum_bytes",
+                    "fieldName": "sum_bytes"
+                },
+                {
+                    "type": "constant",
+                    "name": "sum_bytes",
+                    "value": 471859200
+                }
+            ]
+        }
+    ],
+    "intervals":[]
+}
