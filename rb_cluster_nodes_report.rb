@@ -25,10 +25,10 @@ require 'zk'
 require 'json'
 require 'yaml'
 require 'getopt/std'
-require '/opt/rb/var/reports/lib/get_druid_broker'
-require '/opt/rb/var/reports/lib/get_druid_data'
-require '/opt/rb/var/reports/lib/show_data'
-require '/opt/rb/var/reports/lib/store_data'
+require '../lib/get_druid_broker'
+require '../lib/get_druid_data'
+require '../lib/show_data'
+require '../lib/store_data'
 
 config_dir = "/opt/rb/etc/reports"
 lib_dir = "/opt/rb/var/reports/lib"
