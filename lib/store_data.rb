@@ -10,10 +10,9 @@ class Store_data
   def managers()
     name = @data["name"]
     CSV.open(report_file, "a+") do |csv|
-      csv << name, \
-        @data["ip_address"], \
+      csv << name, @data["ip_address"], \
         @data["version"], \
-        (@data["chef_status"]?("fail"):("ok")), \
+        @data["chef_status"] ? ("fail"):("ok"), \
         node["cpu"]["0"]["model_name"], node.cpu.total.to_s, \
         node.memory.total, \
         @time_arr.each do |time|
@@ -24,8 +23,9 @@ class Store_data
         performance_data[time][name]["load_1"]["average"].to_s, \
         performance_data[time][name]["load_1"]["max"].to_s, \
         performance_data[time][name]["disk_load"]["average"].to_s, \
-        performance_data[time][name]["disk_load"]["max"].to_s, \
+        performance_data[time][name]["disk_load"]["max"].to_s
       end
     end
   end
 end
+

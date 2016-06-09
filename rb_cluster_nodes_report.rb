@@ -28,6 +28,7 @@ require 'getopt/std'
 require '/opt/rb/var/reports/lib/get_druid_broker'
 require '/opt/rb/var/reports/lib/get_druid_data'
 require '/opt/rb/var/reports/lib/show_data'
+require '/opt/rb/var/reports/lib/store_data'
 
 config_dir = "/opt/rb/etc/reports"
 lib_dir = "/opt/rb/var/reports/lib"
@@ -134,52 +135,7 @@ if !nodes.nil? and !nodes.empty?
   
     Show_data.new(data, "manager", time_arr)
 
-    CSV.open(report_file, "a+") do |csv|
-      csv << [name, node.ipaddress, node["redBorder"]["rpms"]["manager"], \
-        ((Time.now.to_i-node[:ohai_time].to_i>600)?("fail"):("ok")), \
-        node["cpu"]["0"]["model_name"], node.cpu.total.to_s, \
-        node.memory.total,performance_data[1][name]["cpu"]["average"].to_s, \
-        performance_data[1][name]["cpu"]["max"].to_s, \
-        performance_data[1][name]["memory"]["average"].to_s, \
-        performance_data[1][name]["memory"]["max"].to_s, \
-        performance_data[1][name]["load_1"]["average"].to_s, \
-        performance_data[1][name]["load_1"]["max"].to_s, \
-        performance_data[1][name]["disk_load"]["average"].to_s, \
-        performance_data[1][name]["disk_load"]["max"].to_s, \
-        performance_data[3][name]["cpu"]["average"].to_s, \
-        performance_data[3][name]["cpu"]["max"].to_s, \
-        performance_data[3][name]["memory"]["average"].to_s, \
-        performance_data[3][name]["memory"]["max"].to_s, \
-        performance_data[3][name]["load_1"]["average"].to_s, \
-        performance_data[3][name]["load_1"]["max"].to_s, \
-        performance_data[3][name]["disk_load"]["average"].to_s, \
-        performance_data[3][name]["disk_load"]["max"].to_s, \
-        performance_data[12][name]["cpu"]["average"].to_s, \
-        performance_data[12][name]["cpu"]["max"].to_s, \
-        performance_data[12][name]["memory"]["average"].to_s, \
-        performance_data[12][name]["memory"]["max"].to_s, \
-        performance_data[12][name]["load_1"]["average"].to_s, \
-        performance_data[12][name]["load_1"]["max"].to_s, \
-        performance_data[12][name]["disk_load"]["average"].to_s, \
-        performance_data[12][name]["disk_load"]["max"].to_s, \
-        performance_data[24][name]["cpu"]["average"].to_s, \
-        performance_data[24][name]["cpu"]["max"].to_s, \
-        performance_data[24][name]["memory"]["average"].to_s, \
-        performance_data[24][name]["memory"]["max"].to_s, \
-        performance_data[24][name]["load_1"]["average"].to_s, \
-        performance_data[24][name]["load_1"]["max"].to_s, \
-        performance_data[24][name]["disk_load"]["average"].to_s,\
-        performance_data[24][name]["disk_load"]["max"].to_s,\
-        performance_data[168][name]["cpu"]["average"].to_s,\
-        performance_data[168][name]["cpu"]["max"].to_s, \
-        performance_data[168][name]["memory"]["average"].to_s, \
-        performance_data[168][name]["memory"]["max"].to_s, \
-        performance_data[168][name]["load_1"]["average"].to_s, \
-        performance_data[168][name]["load_1"]["max"].to_s, \
-        performance_data[168][name]["disk_load"]["average"].to_s, \
-        performance_data[168][name]["disk_load"]["max"].to_s]
-
-  end
+    Store_data.new(data, "manager", time_arr)
   end
 end
 # vim:ts=2:sw=4:expandtab:ai:nowrap:formatoptions=croqln:

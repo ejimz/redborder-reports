@@ -1,8 +1,10 @@
 class manager_nodes_report
 
-def initialize(time,)
+  def initialize(time,)
   
-end
+  end
 
 
 end
+
+# vim:ts=2:sw=4:expandtab:ai:nowrap:formatoptions=croqln:
